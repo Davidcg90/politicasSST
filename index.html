@@ -14,8 +14,8 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#e8f4fd 
 .header h1{font-size:clamp(2.5rem,5vw,4rem);color:#1e293b;text-align:center;font-weight:700;margin-bottom:10px;text-shadow:2px 2px 4px rgba(255,255,255,0.8)}
 .header p{font-size:clamp(1.1rem,2.5vw,1.5rem);color:#475569;text-align:center;max-width:800px;margin:0 auto;line-height:1.6}
 
-/* Iconos NAV responsive fijos */
-.nav-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(1.2rem,4vw,1.8rem);height:clamp(1.2rem,4vw,1.8rem);font-size:clamp(1.2rem,4vw,1.8rem);line-height:1;margin-right:10px;flex-shrink:0}
+/* Iconos NAV responsive - FIX para distorsión */
+.nav-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(1.2rem,4vw,1.8rem);height:clamp(1.2rem,4vw,1.8rem);font-size:clamp(1rem,3.5vw,1.6rem);line-height:1;margin-right:10px;flex-shrink:0}
 
 .nav-container{position:relative;display:flex;justify-content:center;flex-wrap:wrap;gap:15px;margin-bottom:40px;padding:20px;background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,255,255,0.7));backdrop-filter:blur(20px);border-radius:30px;box-shadow:0 20px 60px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.8)}
 .nav-btn{position:relative;flex:1 1 200px;max-width:250px;height:70px;background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border:2px solid transparent;border-radius:25px;cursor:pointer;font-weight:600;font-size:clamp(1rem,2.5vw,1.2rem);color:#1e293b;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);overflow:hidden;touch-action:manipulation;-webkit-user-select:none;-webkit-touch-callout:none;user-select:none;box-shadow:0 10px 30px rgba(0,0,0,0.1);position:relative;display:flex;align-items:center;justify-content:center}
@@ -25,20 +25,41 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#e8f4fd 
 .nav-btn.active{background:linear-gradient(135deg,#a7f3d0,#34d399);color:#065f46;transform:translateY(-3px);box-shadow:0 15px 40px rgba(52,211,153,0.4)}
 .nav-btn span{display:flex;align-items:center;height:100%;padding:0 15px;gap:8px}
 
-/* Iconos HEADER responsive fijos */
-.header-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(2rem,6vw,3rem);height:clamp(2rem,6vw,3rem);font-size:clamp(2rem,6vw,3rem);line-height:1;flex-shrink:0}
+/* Iconos HEADER - FIX mejorado */
+.header-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(2rem,6vw,3rem);height:clamp(2rem,6vw,3rem);font-size:clamp(1.8rem,5vw,2.8rem);line-height:1;flex-shrink:0}
 
-/* Iconos SECCIONES y CARDS responsive fijos */
-.section-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(3rem,10vw,5rem);height:clamp(3rem,10vw,5rem);font-size:clamp(3rem,10vw,5rem);line-height:1;margin-bottom:20px;flex-shrink:0}
-.card-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(3.5rem,12vw,4.5rem);height:clamp(3.5rem,12vw,4.5rem);font-size:clamp(3.5rem,12vw,4.5rem);line-height:1;margin-bottom:20px;flex-shrink:0}
+/* Iconos SECCIONES y CARDS - FIX anti-distorsión */
+.section-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(3rem,8vw,4.5rem);height:clamp(3rem,8vw,4.5rem);font-size:clamp(2.5rem,7vw,4rem);line-height:1;margin-bottom:20px;flex-shrink:0}
+.card-icon{display:inline-flex;align-items:center;justify-content:center;width:clamp(3rem,9vw,4rem);height:clamp(3rem,9vw,4rem);font-size:clamp(2.8rem,8vw,3.8rem);line-height:1;margin-bottom:20px;flex-shrink:0}
 
-/* Anti-distortion Font Awesome */
-i[class*="fa-"]{line-height:1 !important;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+/* FIX CRÍTICO Font Awesome - Evita distorsión en iOS/Safari/Mobile [web:4][web:10] */
+i[class*="fa-"], .fa[class*="fa-"] {
+    line-height: 1 !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    -webkit-text-stroke-width: 0.1px;
+    text-rendering: optimizeLegibility;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    background-clip: content-box;
+}
+
+/* Prevenir zoom/distorsión en iOS */
+@supports (-webkit-touch-callout: none) {
+    .nav-icon, .header-icon, .section-icon, .card-icon {
+        font-size-adjust: 0.5;
+        -webkit-text-size-adjust: 100%;
+    }
+}
 
 .sections-container{position:relative;min-height:600px;overflow:hidden;border-radius:30px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,0.15);padding:40px;max-width:1200px;margin:0 auto}
 .section{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;visibility:hidden;transition:all 0.5s cubic-bezier(0.4,0,0.2,1);padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .section.active{position:static;opacity:1;visibility:visible;transition:all 0.5s cubic-bezier(0.4,0,0.2,1)}
-.section h2{font-size:clamp(2rem,6vw,3.5rem);color:#1e293b;margin-bottom:30px;font-weight:700;background:linear-gradient(135deg,#a7f3d0,#34d399);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:15px}
+.section h2{font-size:clamp(2rem,6vw,3.5rem);color:#1e293b;margin-bottom:30px;font-weight:700;background:linear-gradient(135deg,#a7f3d0,#34d399);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:15px;justify-content:center}
 .section-content{max-width:900px;line-height:1.8;font-size:clamp(1.1rem,3vw,1.3rem);color:#475569}
 .policy-card{display:inline-block;background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(248,250,252,0.8));backdrop-filter:blur(10px);padding:30px;margin:20px;border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.1);border-left:6px solid #a7f3d0;max-width:600px}
 
@@ -47,11 +68,13 @@ i[class*="fa-"]{line-height:1 !important;-webkit-font-smoothing:antialiased;-moz
 .nav-btn{height:60px;flex:1 1 auto;max-width:100%;font-size:1rem}
 .sections-container{padding:30px;min-height:500px;margin:20px 10px;border-radius:25px}
 .section{padding:30px}
-/* Iconos móviles más proporcionados */
-.section-icon{width:clamp(2.8rem,12vw,4.5rem);height:clamp(2.8rem,12vw,4.5rem);font-size:clamp(2.8rem,12vw,4.5rem)}
-.card-icon{width:clamp(3rem,14vw,4rem);height:clamp(3rem,14vw,4rem);font-size:clamp(3rem,14vw,4rem)}
-.nav-icon{width:clamp(1.4rem,5vw,1.6rem);height:clamp(1.4rem,5vw,1.6rem);font-size:clamp(1.4rem,5vw,1.6rem)}
-.header-icon{width:clamp(2.2rem,7vw,2.8rem);height:clamp(2.2rem,7vw,2.8rem);font-size:clamp(2.2rem,7vw,2.8rem)}
+/* FIX MÓVIL: Tamaños fijos más pequeños para evitar distorsión [web:9] */
+.section-icon{width:3.2rem;height:3.2rem;font-size:2.8rem}
+.card-icon{width:3.5rem;height:3.5rem;font-size:3rem}
+.nav-icon{width:1.4rem;height:1.4rem;font-size:1.2rem}
+.header-icon{width:2.4rem;height:2.4rem;font-size:2.2rem}
+.nav-container{gap:12px}
+.policy-card{margin:15px 10px;padding:25px}
 }
 
 /* Optimizaciones móviles críticas */
